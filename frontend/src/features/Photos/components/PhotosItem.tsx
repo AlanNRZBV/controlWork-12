@@ -1,8 +1,16 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Photo } from '../../../types';
 import { apiURL } from '../../../constants.ts';
 import imageNotAvailable from '../../../assets/images/image_not_available.png';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Dialog,
+  Link,
+  Typography,
+} from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
@@ -13,6 +21,7 @@ import {
   fetchPhotos,
   fetchPhotosByUser,
 } from '../photosThunks.ts';
+import Image from 'mui-image';
 
 const PhotosItem: FC<Photo> = ({
   _id,
@@ -29,6 +38,8 @@ const PhotosItem: FC<Photo> = ({
   const isByUser = location.pathname.includes('photos');
   const isYours = user?._id === userId._id;
   const isAdmin = user?.role === 'admin';
+
+  const [open, setOpen] = useState(false);
 
   let cardImage = imageNotAvailable;
 
@@ -48,16 +59,34 @@ const PhotosItem: FC<Photo> = ({
     }
     dispatch(fetchPhotos());
   };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Card>
+      <Dialog open={open} onClose={handleClose}>
+        <Image src={cardImage} alt={title} />
+      </Dialog>
       <CardMedia
+        onClick={handleClickOpen}
         component="img"
-        alt={`${title}'s image`}
+        alt={title}
         height="140"
         image={cardImage}
       />
       <CardContent style={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography gutterBottom component="div" noWrap>
+        <Typography
+          onClick={handleClickOpen}
+          gutterBottom
+          sx={{ textDecoration: 'underline', ':hover': { cursor: 'pointer' } }}
+          noWrap
+        >
           {title}
         </Typography>
         <Typography
