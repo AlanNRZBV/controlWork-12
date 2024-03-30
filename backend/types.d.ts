@@ -1,4 +1,10 @@
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+
+export interface PhotoData {
+  userId: Types.Schema.ObjectId;
+  title: string;
+  image: string | null;
+}
 
 export interface UserData {
   email: string;

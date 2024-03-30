@@ -26,5 +26,5 @@ const PhotoSchema = new Schema({
   },
 });
 
-const Photo = mongoose.model('Cocktail', PhotoSchema);
+const Photo = mongoose.model('Photo', PhotoSchema);
 export default Photo;
