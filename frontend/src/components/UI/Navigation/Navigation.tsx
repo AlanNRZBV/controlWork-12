@@ -1,10 +1,15 @@
 import { AppBar, Box, Button, Modal, Toolbar, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { selectUser } from '../../../features/Users/usersSlice.ts';
-import { useAppSelector } from '../../../app/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import UserMenu from './UserMenu.tsx';
 import AnonymousMenu from './AnonymousMenu.tsx';
 import { useState } from 'react';
+import {
+  photosViewState,
+  toggleView,
+} from '../../../features/Photos/photosSlice.ts';
+import { fetchPhotos } from '../../../features/Photos/photosThunks.ts';
 
 const style = {
   position: 'absolute',
@@ -20,13 +25,21 @@ const style = {
 };
 const Navigation = () => {
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const clickHandler = () => {
+    dispatch(fetchPhotos());
+  };
+
   return (
     <AppBar position="static" color="primary">
       <Toolbar>
         <Typography
+          onClick={clickHandler}
           to="/"
           component={NavLink}
           variant="h6"
@@ -51,9 +64,7 @@ const Navigation = () => {
           {user ? <UserMenu user={user} /> : <AnonymousMenu />}
         </Box>
         <Modal open={open} onClose={handleClose}>
-          <Box sx={style}>
-
-          </Box>
+          <Box sx={style}></Box>
         </Modal>
       </Toolbar>
     </AppBar>

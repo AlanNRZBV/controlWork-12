@@ -26,7 +26,7 @@ photosRouter.get('/', async (req, res, next) => {
       if (photos.length === 0) {
         return res.send({ message: 'User has no photos', photos });
       }
-      return res.send({ message: `Loaded ${photos.length} photos`, photos });
+      return res.send({ message: `Loaded ${photos.length} photos `, photos });
     }
 
     return res.send({ warning: `Might be an error`, emptyKey: null });

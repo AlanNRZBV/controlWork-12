@@ -1,22 +1,19 @@
-
-
-
 export interface Photo {
-  userId:UserData,
-  _id:string,
-  title:string,
-  image:string
+  userId: UserData;
+  _id: string;
+  title: string;
+  image: string;
+  onAuthorClick: (id: string) => void;
 }
 export interface PhotosResponse {
-  message:string
-  photos:Photo[]
+  message: string;
+  photos: Photo[];
 }
 
 export interface UserData {
   _id: string;
   displayName: string;
 }
-
 
 export interface RegisterMutation {
   email: string;
