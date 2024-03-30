@@ -33,7 +33,7 @@ const Navigation = () => {
           color="white"
           sx={{ mr: 'auto', textDecoration: 'none' }}
         >
-          Cheers!
+          Gallery!
         </Typography>
         <Box display="flex">
           {user ? (
