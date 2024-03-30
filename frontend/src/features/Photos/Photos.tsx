@@ -1,16 +1,11 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectUser } from '../Users/usersSlice.ts';
-import {
-  isPhotosLoading,
-  photosState,
-  photosViewState,
-  toggleView,
-} from './photosSlice.ts';
+import { isPhotosLoading, photosState } from './photosSlice.ts';
 import { Box, CircularProgress } from '@mui/material';
 import PhotosItem from './components/PhotosItem.tsx';
 import { fetchPhotos, fetchPhotosByUser } from './photosThunks.ts';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Photos = () => {
   const dispatch = useAppDispatch();
@@ -30,10 +25,8 @@ const Photos = () => {
       dispatch(fetchPhotosByUser(id));
       return;
     }
-
     dispatch(fetchPhotos());
   }, [dispatch, id, path]);
-  console.log(photos);
 
   const mainContent = photos.map((item) => (
     <PhotosItem

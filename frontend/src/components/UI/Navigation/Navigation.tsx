@@ -5,10 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import UserMenu from './UserMenu.tsx';
 import AnonymousMenu from './AnonymousMenu.tsx';
 import { useState } from 'react';
-import {
-  photosViewState,
-  toggleView,
-} from '../../../features/Photos/photosSlice.ts';
 import { fetchPhotos } from '../../../features/Photos/photosThunks.ts';
 
 const style = {
