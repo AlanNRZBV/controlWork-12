@@ -9,7 +9,6 @@ import { useLocation } from 'react-router-dom';
 
 const Photos = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectUser);
   const photos = useAppSelector(photosState);
   const isLoading = useAppSelector(isPhotosLoading);
   const location = useLocation();

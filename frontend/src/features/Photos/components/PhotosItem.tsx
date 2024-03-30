@@ -3,12 +3,10 @@ import { Photo } from '../../../types';
 import { apiURL } from '../../../constants.ts';
 import imageNotAvailable from '../../../assets/images/image_not_available.png';
 import {
-  Button,
   Card,
   CardContent,
   CardMedia,
   Dialog,
-  Link,
   Typography,
 } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';

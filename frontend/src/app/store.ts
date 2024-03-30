@@ -1,8 +1,17 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import {usersReducer} from '../features/Users/usersSlice.ts';
-import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE,} from 'redux-persist';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { usersReducer } from '../features/Users/usersSlice.ts';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import {photosReducer} from "../features/Photos/photosSlice.ts";
+import { photosReducer } from '../features/Photos/photosSlice.ts';
 
 const usersPersistConfig = {
   key: 'gallery:users',
