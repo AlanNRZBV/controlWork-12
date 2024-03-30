@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import config from './config';
 import User from './models/User';
 import * as crypto from 'crypto';
+import Photo from './models/Photo';
 
 const dropCollection = async (db: mongoose.Connection, collectionName: string) => {
   try {
@@ -32,23 +33,6 @@ const run = async () => {
         avatar: 'fixtures/avatar_user.png',
       },
       {
-        email: 'user_1@test.com',
-        password: '5tr0ngPswrd',
-        token: crypto.randomUUID(),
-        role: 'client',
-        displayName: 'us0r_1',
-        avatar: 'fixtures/avatar_user.png',
-      },
-
-      {
-        email: 'user_2@test.com',
-        password: '5tr0ngPswrd',
-        token: crypto.randomUUID(),
-        role: 'client',
-        displayName: 'us0r_2',
-        avatar: 'fixtures/avatar_user.png',
-      },
-      {
         email: 'admin@test.com',
         password: '5tr0ngPswrd',
         token: crypto.randomUUID(),
@@ -59,9 +43,51 @@ const run = async () => {
     ]);
 
     const defaultUser = await User.findOne({ email: 'user@test.com' });
-    const defaultUser_1 = await User.findOne({ email: 'user_1@test.com' });
-    const defaultUser_2 = await User.findOne({ email: 'user_2@test.com' });
     const adminUser = await User.findOne({ email: 'admin@test.com' });
+
+    await Photo.create([
+      {
+        userId: defaultUser?._id,
+        title: 'Default user test photo with very long title',
+        image: '/fixtures/user_photo_1.jpg',
+      },
+      {
+        userId: defaultUser?._id,
+        title: 'Default user photo',
+        image: '/fixtures/user_photo_2.jpg',
+      },
+      {
+        userId: defaultUser?._id,
+        title: 'vr shrt ttl',
+        image: '/fixtures/user_photo_3.jpg',
+      },
+      {
+        userId: defaultUser?._id,
+        title: 'Unexpected copy',
+        image: '/fixtures/user_photo_3.jpg',
+      },
+      {
+        userId: adminUser?._id,
+        title:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        image: '/fixtures/admin_photo_1.jpg',
+      },
+      {
+        userId: adminUser?._id,
+        title: 'Admin photo',
+        image: '/fixtures/admin_photo_2.jpg',
+      },
+      {
+        userId: adminUser?._id,
+        title: 'Big cat',
+        image: '/fixtures/admin_photo_3.jpg',
+      },
+      {
+        userId: adminUser?._id,
+        title: 'Another cat',
+        image: '/fixtures/admin_photo_4.jpg',
+      },
+    ]);
 
     await db.close();
   } catch (e) {
