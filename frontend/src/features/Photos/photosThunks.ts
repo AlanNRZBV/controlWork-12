@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { PhotosResponse } from '../../types';
+import { PhotoMutation, PhotosResponse } from '../../types';
 import axiosApi from '../../axiosApi.ts';
 
 export const fetchPhotos = createAsyncThunk<PhotosResponse>(
@@ -34,6 +34,26 @@ export const deletePhoto = createAsyncThunk<void, string>(
       return response.data;
     } catch (e) {
       console.log('Caught on try - DELETE ON PHOTO - ', e);
+    }
+  },
+);
+
+export const submitPhoto = createAsyncThunk<void, PhotoMutation>(
+  'photos/submit',
+  async (arg) => {
+    try {
+      const formData = new FormData();
+      const keys = Object.keys(arg) as (keyof PhotoMutation)[];
+      keys.forEach((key) => {
+        const value = arg[key];
+        if (value !== null) {
+          formData.append(key, value);
+        }
+      });
+      const response = await axiosApi.post('/photos', formData);
+      return response.data;
+    } catch (e) {
+      console.log('Caught on try - SUBMIT PHOTO - ', e);
     }
   },
 );

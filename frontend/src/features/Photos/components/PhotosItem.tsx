@@ -42,7 +42,7 @@ const PhotosItem: FC<Photo> = ({
 
   const deleteHandler = async () => {
     await dispatch(deletePhoto(_id));
-    if (path.includes('photo')) {
+    if (path.includes('photos')) {
       dispatch(fetchPhotosByUser(userId._id));
       return;
     }

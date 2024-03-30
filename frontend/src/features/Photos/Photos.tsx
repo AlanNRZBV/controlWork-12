@@ -21,7 +21,7 @@ const Photos = () => {
   };
 
   useEffect(() => {
-    if (path.includes('photo')) {
+    if (path.includes('photos')) {
       dispatch(fetchPhotosByUser(id));
       return;
     }

@@ -1,11 +1,12 @@
 import { AppBar, Box, Button, Modal, Toolbar, Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { selectUser } from '../../../features/Users/usersSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
 import UserMenu from './UserMenu.tsx';
 import AnonymousMenu from './AnonymousMenu.tsx';
 import { useState } from 'react';
 import { fetchPhotos } from '../../../features/Photos/photosThunks.ts';
+import AddPhotoForm from '../../../features/Photos/components/AddPhotoForm.tsx';
 
 const style = {
   position: 'absolute',
@@ -22,6 +23,10 @@ const style = {
 const Navigation = () => {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const path = location.pathname as string;
+  const id = location.pathname.split('/')[1];
+  const isYours = user?._id === id;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -45,14 +50,14 @@ const Navigation = () => {
           Gallery!
         </Typography>
         <Box display="flex">
-          {user ? (
+          {user && path.includes('photos') && isYours ? (
             <Button
               onClick={handleOpen}
               color="warning"
               variant="contained"
               sx={{ mr: 2 }}
             >
-              Add cocktail
+              Add photo
             </Button>
           ) : (
             <></>
@@ -60,7 +65,9 @@ const Navigation = () => {
           {user ? <UserMenu user={user} /> : <AnonymousMenu />}
         </Box>
         <Modal open={open} onClose={handleClose}>
-          <Box sx={style}></Box>
+          <Box sx={style}>
+            <AddPhotoForm closeHandler={handleClose} />
+          </Box>
         </Modal>
       </Toolbar>
     </AppBar>

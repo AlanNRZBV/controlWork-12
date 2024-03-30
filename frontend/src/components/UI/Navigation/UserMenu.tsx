@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
-import {User} from '../../../types';
-import {Box, Button, Menu, MenuItem} from '@mui/material';
-import {useAppDispatch} from '../../../app/hooks.ts';
-import {logout} from '../../../features/Users/usersThunks.ts';
+import React from 'react';
+import { User } from '../../../types';
+import { Box, Button, Typography } from '@mui/material';
+import { useAppDispatch } from '../../../app/hooks.ts';
+import { logout } from '../../../features/Users/usersThunks.ts';
 import Image from 'mui-image';
 import imageNotAvailable from '../../../assets/images/image_not_available.png';
-import {apiURL} from '../../../constants.ts';
-
+import { apiURL } from '../../../constants.ts';
+import { fetchPhotosByUser } from '../../../features/Photos/photosThunks.ts';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   user: User;
@@ -14,8 +15,6 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({ user }) => {
   const dispatch = useAppDispatch();
-
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   let avatarImage = imageNotAvailable;
 
@@ -27,37 +26,33 @@ const UserMenu: React.FC<Props> = ({ user }) => {
     }
   }
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClick = async () => {
+    await dispatch(fetchPhotosByUser(user._id));
   };
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
-
   return (
     <Box display="flex" alignItems="center">
-      <Button color="inherit" onClick={handleClick} sx={{ flexShrink: '0' }}>
+      <Typography
+        component={NavLink}
+        to={`/${user._id}/photos`}
+        color="inherit"
+        onClick={handleClick}
+        sx={{ flexShrink: '0' }}
+      >
         Hello, {user.displayName}!
-      </Button>
+      </Typography>
       <Image
         src={avatarImage}
         alt={`${user.avatar} avatar`}
         style={{ width: '35px', height: '35px', borderRadius: '50%' }}
       />
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        keepMounted
-      >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      </Menu>
+      <Button onClick={handleLogout} variant="text" color="inherit">
+        Logout
+      </Button>
     </Box>
   );
 };

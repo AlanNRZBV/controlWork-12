@@ -5,6 +5,11 @@ export interface Photo {
   image: string;
   onAuthorClick: (id: string) => void;
 }
+
+export interface PhotoMutation {
+  title: string;
+  image: File | null;
+}
 export interface PhotosResponse {
   message: string;
   photos: Photo[];
