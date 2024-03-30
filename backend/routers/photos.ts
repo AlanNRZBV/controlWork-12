@@ -4,7 +4,6 @@ import auth, { RequestWithUser } from '../middleware/auth';
 import mongoose from 'mongoose';
 import { imagesUpload } from '../multer';
 import { PhotoData } from '../types';
-import permit from '../middleware/permit';
 
 const photosRouter = Router();
 
