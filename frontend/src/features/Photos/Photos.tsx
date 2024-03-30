@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectUser } from '../Users/usersSlice.ts';
 import { isPhotosLoading, photosState } from './photosSlice.ts';
 import { Box, CircularProgress } from '@mui/material';
 import PhotosItem from './components/PhotosItem.tsx';

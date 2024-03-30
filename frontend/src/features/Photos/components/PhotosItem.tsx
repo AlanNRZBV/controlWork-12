@@ -7,6 +7,7 @@ import {
   CardContent,
   CardMedia,
   Dialog,
+  IconButton,
   Typography,
 } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
@@ -20,7 +21,7 @@ import {
   fetchPhotosByUser,
 } from '../photosThunks.ts';
 import Image from 'mui-image';
-
+import CloseIcon from '@mui/icons-material/Close';
 const PhotosItem: FC<Photo> = ({
   _id,
   title,
@@ -69,6 +70,9 @@ const PhotosItem: FC<Photo> = ({
   return (
     <Card>
       <Dialog open={open} onClose={handleClose}>
+        <IconButton onClick={handleClose} sx={{ alignSelf: 'end' }}>
+          <CloseIcon />
+        </IconButton>
         <Image src={cardImage} alt={title} />
       </Dialog>
       <CardMedia
